@@ -13,8 +13,10 @@ const figuras = ['A', 'J', 'Q', 'K'];
 //Referncias HTML
 
 const btnPedir = document.querySelector('#btnPedir');
+const btnDetener = document.querySelector('#btnDetener');
 const cartaJug = document.querySelector('#jugador-cartas');
-const puntuacionJug = document.querySelector('small');
+const cartaCPU = document.querySelector('#cpu-cartas');
+const puntuacion = document.querySelectorAll('small');
 
 let puntosJug = 0,
     puntosCPU = 0;
@@ -66,6 +68,43 @@ const valorCarta = (carta)=>{
                 : valor * 1;
 }
 
+// Turno computadora
+
+const turnoCPU = (puntosJugador) => {
+
+    do{
+        const carta = pedirCarta();
+
+        puntosCPU += valorCarta(carta);
+
+        puntuacion[1].textContent = puntosCPU;
+        
+        const nuevaCarta = document.createElement('img');
+        nuevaCarta.classList.add("carta");
+        nuevaCarta.src =`/assets/cartas/${carta}.png`
+        cartaCPU.appendChild(nuevaCarta);
+
+        if(puntosJugador > 21){
+            break;
+        }
+
+    }while((puntosCPU < puntosJugador) && (puntosJugador <= 21));
+
+    setTimeout(() => {
+
+        if(puntosCPU === puntosJugador){
+            alert('EMPATE');
+        }else if(puntosJug > 21){
+            alert('GANA LA CPU');
+        }else if(puntosCPU > 21){
+            alert('GANA JUGADOR');
+        }else{
+            alert('GANA CPU');
+        }
+        
+    }, 20);
+}
+
 // Eventos
 
 btnPedir.addEventListener('click', ()=>{
@@ -74,9 +113,27 @@ btnPedir.addEventListener('click', ()=>{
 
     puntosJug += valorCarta(carta);
 
-    puntuacionJug.textContent = puntosJug;
+    puntuacion[0].textContent = puntosJug;
+    
+    const nuevaCarta = document.createElement('img');
+    nuevaCarta.classList.add("carta");
+    nuevaCarta.src =`/assets/cartas/${carta}.png`
+    cartaJug.appendChild(nuevaCarta);
 
-    //cartaJug.appendChild()
-
-
+    if(puntosJug > 21){
+        btnPedir.disabled = true;
+        btnDetener.disabled  = true;
+        turnoCPU(puntosJug);
+    }else if(puntosJug === 21){
+        btnPedir.disabled = true;
+        btnDetener.disabled  = true;
+        turnoCPU(puntosJug);
+    }
 });
+
+btnDetener.addEventListener('click', ()=>{
+   
+    btnPedir.disabled  = true;
+    btnDetener.disabled  = true;
+    turnoCPU(puntosJug);
+})
