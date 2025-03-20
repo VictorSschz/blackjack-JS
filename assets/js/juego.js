@@ -9,6 +9,16 @@ let baraja = [];
 const palos =['C', 'D', 'H', 'S'];
 const figuras = ['A', 'J', 'Q', 'K'];
 
+
+//Referncias HTML
+
+const btnPedir = document.querySelector('#btnPedir');
+const cartaJug = document.querySelector('#jugador-cartas');
+const puntuacionJug = document.querySelector('small');
+
+let puntosJug = 0,
+    puntosCPU = 0;
+
 //Esta función crea una nueva Baraja
 const crearBaraja = () =>{
 
@@ -55,3 +65,18 @@ const valorCarta = (carta)=>{
                 (valor === 'A' ? 11 : 10)
                 : valor * 1;
 }
+
+// Eventos
+
+btnPedir.addEventListener('click', ()=>{
+
+    const carta = pedirCarta();
+
+    puntosJug += valorCarta(carta);
+
+    puntuacionJug.textContent = puntosJug;
+
+    //cartaJug.appendChild()
+
+
+});
