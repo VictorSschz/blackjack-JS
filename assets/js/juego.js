@@ -14,6 +14,7 @@ const figuras = ['A', 'J', 'Q', 'K'];
 
 const btnPedir = document.querySelector('#btnPedir');
 const btnDetener = document.querySelector('#btnDetener');
+const btnNuevo = document.querySelector('#btnNuevo');
 const cartaJug = document.querySelector('#jugador-cartas');
 const cartaCPU = document.querySelector('#cpu-cartas');
 const puntuacion = document.querySelectorAll('small');
@@ -81,7 +82,7 @@ const turnoCPU = (puntosJugador) => {
         
         const nuevaCarta = document.createElement('img');
         nuevaCarta.classList.add("carta");
-        nuevaCarta.src =`/assets/cartas/${carta}.png`
+        nuevaCarta.src =`assets/cartas/${carta}.png`
         cartaCPU.appendChild(nuevaCarta);
 
         if(puntosJugador > 21){
@@ -102,7 +103,7 @@ const turnoCPU = (puntosJugador) => {
             alert('GANA CPU');
         }
         
-    }, 20);
+    }, 50);
 }
 
 // Eventos
@@ -117,7 +118,7 @@ btnPedir.addEventListener('click', ()=>{
     
     const nuevaCarta = document.createElement('img');
     nuevaCarta.classList.add("carta");
-    nuevaCarta.src =`/assets/cartas/${carta}.png`
+    nuevaCarta.src =`assets/cartas/${carta}.png`
     cartaJug.appendChild(nuevaCarta);
 
     if(puntosJug > 21){
@@ -136,4 +137,23 @@ btnDetener.addEventListener('click', ()=>{
     btnPedir.disabled  = true;
     btnDetener.disabled  = true;
     turnoCPU(puntosJug);
+})
+
+btnNuevo.addEventListener('click', ()=>{
+   
+    puntosJug = 0;
+    puntosCPU = 0;
+    puntuacion[0].innerText = puntosJug;
+    puntuacion[1].innerText = puntosCPU;
+
+    baraja = [];
+    
+    crearBaraja();
+
+    btnPedir.disabled  = false;
+    btnDetener.disabled  = false;
+    
+    cartaJug.innerHTML = '';
+    cartaCPU.innerHTML = '';
+
 })
